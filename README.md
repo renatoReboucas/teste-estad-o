@@ -9,18 +9,18 @@ Desenvolvimento de um sistema que possibilite gerenciar e listar notícias.
 ## Requisitos obrigatórios
 
 ### 1. Frontend
-#### a. Feed de notícias
+#### 1.1. Feed de notícias
 - Exibir uma listagem que contenha (título, url e data)
 - Ao clicar em uma notícia na lista, mostrar o conteúdo completo da matéria em uma nova página
 - Novas notícias devem ser espelhadas na listagem
 
-#### b. Tela de administração de notícias
+#### 1.2. Tela de administração de notícias
 - Mostrar listagem de notícias criadas ou atualizadas
 - Ao deletar uma matéria remover o item da listagem
 - Mostrar a última data de atualização
 - Contendo na listagem título e url da matéria
 
-#### c. Observações Frontend
+#### 1.3. Observações Frontend
 - A tela de listagem e a de administração de notícias deverão ser distintas
 - Desenvolva uma interface visando um código limpo e com uma padronização de cores e layout contendo responsividade
 - A tecnologia aplicada pode conter de preferência React.js ou Next.js
