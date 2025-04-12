@@ -1,6 +1,0 @@
-### Variables
-
-@apiurl = http://localhost:3000
-
-### get all news
-GET {{apiurl}}/api/news HTTP/1.1
