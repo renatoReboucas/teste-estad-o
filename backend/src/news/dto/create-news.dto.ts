@@ -1,8 +1,10 @@
+import { Type } from "class-transformer";
 import {  IsString, IsOptional, IsInt } from "class-validator";
 
 export class CreateNewsDto {
   @IsInt()
   @IsOptional()
+  @Type(() => Number)
   readonly userId?: number;
 
   @IsString()

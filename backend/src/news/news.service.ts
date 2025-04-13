@@ -1,9 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import  { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import type { CreateNewsDto } from './dto/create-news.dto';
 import type { UpdateNewsDto } from './dto/update.news.dto';
 import type { News } from '@prisma/client';
-import type { PaginationDto } from '@/common/dto/pagination.dto';
+import type { PaginationDto } from '../common/dto/pagination.dto';
+import { formatNewsUrl, removeAccents } from '../common/utils/url.helper';
+import { getImageUrl } from '../common/utils/image.helper';
+
+const BASEURL = `${process?.env?.URL}:${process?.env?.PORT_FRONT}`;
 
 @Injectable()
 export class NewsService {
@@ -23,8 +27,12 @@ export class NewsService {
         }),
         this.prisma.news.count(),
       ]);
+      const formattedNews = news.map(item => ({
+        ...item,
+        url: `${BASEURL}/${item.url}`
+      }));
       return {
-        news,
+        news: formattedNews,
         total,
         totalPages: Math.ceil(total / limit),
         currentPage: page,
@@ -32,37 +40,40 @@ export class NewsService {
     } catch (err) {
       console.log(err);
       if (err instanceof HttpException) {
-        throw err; // Repassar exceções HTTP já formatadas
+        throw err; 
       }
       throw new HttpException("Erro ao buscar todas as notícias!", HttpStatus.BAD_REQUEST);
     }
   }
 
-  async listSpecificNews(id: number): Promise<News> {
+  async listSpecificNews(editoria: string, urlPart: string): Promise<News> {
       try {
-        const news = await this.prisma.news.findUnique({
+        const news = await this.prisma.news.findFirst({
           where: {
-            id: Number(id),
-          },
+            url: `${editoria}/${urlPart}`
+          }
         });
-        if (news) return news;
+        if (news) return { ...news, url:`${BASEURL}/${news.url}` }
         throw new HttpException("Not found", HttpStatus.NOT_FOUND);
       } catch (err) {
         console.log(err);
         throw new HttpException("Erro ao buscar essa notícia!", HttpStatus.BAD_REQUEST)
       }
   }
-  async createNews(data: CreateNewsDto): Promise<News> {
+  async createNews(data: CreateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File): Promise<News> {
     try {
-      return await this.prisma.news.create({
+      const formatEditoria = await removeAccents(data.editoria ?? '');
+      const formatUrl = await removeAccents(data.url ?? '');
+
+      const insert =  await this.prisma.news.create({
         data: {
           editoria: data.editoria ?? '',
           titulo: data.titulo ?? '',
           subtitulo: data.subtitulo ?? '',
           data_hora_publicacao: data.data_hora_publicacao ? new Date(data.data_hora_publicacao) : new Date(),
-          imagem: data.imagem ?? '',
-          imagem_thumb: data.imagem_thumb ?? '',
-          url: data.url ?? '',
+          imagem: getImageUrl(imagem) ?? '',
+          imagem_thumb: getImageUrl(imagemThumb) ?? '',
+          url: `${formatEditoria}/${formatUrl}`,
           conteudo: data.conteudo ?? '',
           user:{
             connect:{
@@ -70,13 +81,18 @@ export class NewsService {
             }
           }
         }
-      });
+      })
+      return {
+        ...insert,
+        url: await formatNewsUrl(data.editoria ?? '', data.url ?? '')
+      } 
     } catch (err) {
       console.log(err);
       throw new HttpException("Erro ao criar essa notícia!", HttpStatus.BAD_REQUEST)
     }
   }
-  async updateNews(id: number,data:UpdateNewsDto) {
+  
+  async updateNews(id: number, data: UpdateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File) {
     try {
       const findNews = await this.prisma.news.findUnique({
         where: {
@@ -86,16 +102,25 @@ export class NewsService {
       if (!findNews) {
         throw new HttpException("Essa notícia não existe!", HttpStatus.NOT_FOUND)
       }
-  
-      return await this.prisma.news.update({
+      
+      const formatEditoria = await removeAccents(data.editoria ?? '');
+      const formatUrl = await removeAccents(data.url ?? '');
+      const update =  await this.prisma.news.update({
         where: {
           id: id
         },
         data:{
           ...data,
+          imagem: getImageUrl(imagem) ?? findNews.imagem,
+          imagem_thumb: getImageUrl(imagemThumb) ?? findNews.imagem_thumb,
+          url: `${formatEditoria}/${formatUrl}`,
           data_hora_publicacao: data.data_hora_publicacao ? new Date(data.data_hora_publicacao) : new Date(),
         }
       })
+      return {
+        ...update,
+        url: await formatNewsUrl(data.editoria ?? '', data.url ?? '')
+      } 
     } catch (err) {
       console.log(err);
       throw new HttpException("Erro ao atualizar essa notícia!", HttpStatus.BAD_REQUEST)
