@@ -1,11 +1,8 @@
 import { Type } from "class-transformer";
-import {  IsString, IsOptional, IsInt } from "class-validator";
+import { IsString, IsOptional, IsInt } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateNewsDto {
-  @IsInt()
-  @IsOptional()
-  @Type(() => Number)
-  readonly userId?: number;
 
   @IsString()
   @IsOptional()
@@ -27,13 +24,23 @@ export class CreateNewsDto {
   @IsOptional()
   readonly data_hora_publicacao?: string;
 
-  @IsString()
+  @ApiProperty({ 
+    type: 'string', 
+    format: 'binary',
+    required: false,
+    description: 'Imagem principal da notícia'
+  })
   @IsOptional()
-  readonly imagem?: string;
+  readonly imagem?: any;
 
-  @IsString()
+  @ApiProperty({ 
+    type: 'string', 
+    format: 'binary',
+    required: false,
+    description: 'Thumbnail da imagem da notícia'
+  })
   @IsOptional()
-  readonly imagem_thumb?: string;
+  readonly imagem_thumb?: any;
 
   @IsString()
   @IsOptional()

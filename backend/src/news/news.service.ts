@@ -6,6 +6,7 @@ import type { News } from '@prisma/client';
 import type { PaginationDto } from '../common/dto/pagination.dto';
 import { formatNewsUrl, removeAccents } from '../common/utils/url.helper';
 import { getImageUrl } from '../common/utils/image.helper';
+import type { PaginatedNewsResponseDto, ResponseNewsDto, StringResponseType } from './dto/response-news.dto';
 
 const BASEURL = `${process?.env?.URL}:${process?.env?.PORT_FRONT}`;
 
@@ -13,7 +14,7 @@ const BASEURL = `${process?.env?.URL}:${process?.env?.PORT_FRONT}`;
 export class NewsService {
   constructor(private readonly  prisma: PrismaService) {}
 
-  async listAllNews(paginationDto: PaginationDto): Promise<any> {
+  async listAllNews(paginationDto: PaginationDto): Promise<PaginatedNewsResponseDto> {
     try {
       const { limit = 10, page =1 } = paginationDto;
 
@@ -46,7 +47,7 @@ export class NewsService {
     }
   }
 
-  async listSpecificNews(editoria: string, urlPart: string): Promise<News> {
+  async listSpecificNews(editoria: string, urlPart: string): Promise<ResponseNewsDto> {
       try {
         const news = await this.prisma.news.findFirst({
           where: {
@@ -60,7 +61,7 @@ export class NewsService {
         throw new HttpException("Erro ao buscar essa notícia!", HttpStatus.BAD_REQUEST)
       }
   }
-  async createNews(data: CreateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File): Promise<News> {
+  async createNews(data: CreateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File): Promise<ResponseNewsDto> {
     try {
       const formatEditoria = await removeAccents(data.editoria ?? '');
       const formatUrl = await removeAccents(data.url ?? '');
@@ -75,11 +76,6 @@ export class NewsService {
           imagem_thumb: getImageUrl(imagemThumb) ?? '',
           url: `${formatEditoria}/${formatUrl}`,
           conteudo: data.conteudo ?? '',
-          user:{
-            connect:{
-              id: data.userId
-            }
-          }
         }
       })
       return {
@@ -92,7 +88,7 @@ export class NewsService {
     }
   }
   
-  async updateNews(id: number, data: UpdateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File) {
+  async updateNews(id: number, data: UpdateNewsDto, imagem?: Express.Multer.File, imagemThumb?: Express.Multer.File): Promise<ResponseNewsDto> {
     try {
       const findNews = await this.prisma.news.findUnique({
         where: {
@@ -126,7 +122,7 @@ export class NewsService {
       throw new HttpException("Erro ao atualizar essa notícia!", HttpStatus.BAD_REQUEST)
     }
   }
-  async deleteNews(id:number) {
+  async deleteNews(id:number): Promise<StringResponseType> {
     try {
       const findNews = await this.prisma.news.findUnique({
         where: {

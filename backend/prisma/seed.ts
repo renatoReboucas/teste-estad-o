@@ -8,14 +8,6 @@ async function main() {
   try {
     console.log('Executando seed...');
 
-    const defaultUser = await prisma.user.create({
-      data: {
-        email: 'admin@example.com',
-        name: 'Admin',
-        password: 'admin123'
-      }
-    });
-
     const filePath = path.join(__dirname, '../assets/noticias.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
     const noticias = JSON.parse(jsonData);
@@ -31,7 +23,6 @@ async function main() {
           imagem_thumb: noticia.imagem_thumb,
           conteudo: noticia.conteudo,
           data_hora_publicacao: new Date(noticia.data_hora_publicacao),
-          userId: defaultUser.id
           }
         })
       }
