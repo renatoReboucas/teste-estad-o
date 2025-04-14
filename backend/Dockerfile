@@ -2,18 +2,26 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+RUN apk add --no-cache yarn
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN npx prisma generate
+RUN yarn prisma generate
 
-RUN npx prisma migrate deploy
+# Remove database operations from build time
+# RUN yarn prisma migrate deploy
+# RUN yarn prisma db seed
 
-RUN npm run db:seed
+RUN yarn build
 
-RUN npm run build
+# Add this line to verify the build output
+RUN ls -la dist/
 
-EXPOSE 3000
+EXPOSE 3336
 
-CMD ["npm","run", "start:prod"]
+# Run migrations and seed at runtime
+CMD sh -c "yarn prisma migrate deploy && yarn prisma db seed && node dist/src/main.js"

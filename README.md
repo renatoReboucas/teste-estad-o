@@ -1,63 +1,105 @@
 # Teste de Desenvolvimento Web
 
-## Objetivo do teste
-Este teste avaliará as habilidades do candidato em desenvolvimento web, integração de tecnologias e o conhecimento em todas as tecnologias mencionadas.
+## Sistema desenvolvido para gerenciar notícias
 
-## Tarefa
-Desenvolvimento de um sistema que possibilite gerenciar e listar notícias.
+O projeto foi construído utilizando NestJS (Node.js com TypeScript), PostgreSQL como banco de dados, Prisma ORM para gerenciamento de dados e Docker para facilitar a configuração do ambiente.
 
-## Requisitos obrigatórios
+## Endpoints Principais
 
-### 1. Frontend
-#### 1.1. Feed de notícias
-- Exibir uma listagem que contenha (título, url e data)
-- Ao clicar em uma notícia na lista, mostrar o conteúdo completo da matéria em uma nova página
-- Novas notícias devem ser espelhadas na listagem
+### 1. Listar Notícias
 
-#### 1.2. Tela de administração de notícias
-- Mostrar listagem de notícias criadas ou atualizadas
-- Ao deletar uma matéria remover o item da listagem
-- Mostrar a última data de atualização
-- Contendo na listagem título e url da matéria
+- **GET /news**
+- **Função**: Retorna lista paginada de notícias ordenadas por data (mais recentes primeiro)
+- **Parâmetros**: `limit` (padrão: 10), `page` (padrão: 1)
+- **Resposta**: Lista de notícias, total, número de páginas, página atual
 
-#### 1.3. Observações Frontend
-- A tela de listagem e a de administração de notícias deverão ser distintas
-- Desenvolva uma interface visando um código limpo e com uma padronização de cores e layout contendo responsividade
-- A tecnologia aplicada pode conter de preferência React.js ou Next.js
+### 2. Filtrar Notícias por Editoria
 
-### 2. Backend
-#### a. API RESTful
-- Implemente rotas para manipular operações CRUD (Create, Read, Update, Delete) para as notícias
-- Estabeleça a comunicação entre o frontend e o backend através de requisições HTTP, permitindo a exibição das notícias presentes no banco de dados
+- **GET /news/editoria/:editoria**
+- **Função**: Retorna notícias filtradas por categoria/editoria
+- **Parâmetros**: `editoria` na URL, `limit` e `page` na query
+- **Resposta**: Lista de notícias da editoria especificada
 
-O desenvolvimento deverá ter como objetivo um código limpo, e a tecnologia aplicada pode conter de preferência Node.js ou frameworks como: Express.js ou Nest.js
+### 3. Criar Notícia
 
-### 3. Banco de Dados
-- Configure um banco de dados (por exemplo, PostgreSQL, MongoDB ou MySQL) para armazenar as notícias
-- Conectar o servidor backend ao banco de dados para realizar operações de persistência
-- Utilizar o arquivo noticias.json para realizar a alimentação inicial da base de dados com as informações contidas no arquivo
-- Utilizar configurações de estrutura de dados para facilitar o first input como por exemplo Migrations e Seeders
+- **POST /news**
+- **Função**: Adiciona uma nova notícia ao sistema
+- **Corpo da Requisição**: Objeto JSON com os dados da notícia (editoria, título, subtítulo, etc.)
+- **Resposta**: Objeto da notícia criada com seu ID gerado
 
-O banco de dados poderá ter qualquer ORM, como Prisma, Typeorm, Sequelize, contanto que seja informado o motivo da escolha.
+### 4. Atualizar Notícia
 
-## Requisitos opcionais
+- **PUT /news/:id**
+- **Função**: Atualiza os dados de uma notícia existente
+- **Parâmetros**: `id` na URL
+- **Corpo da Requisição**: Objeto JSON com os campos a serem atualizados
+- **Resposta**: Objeto da notícia atualizada
 
-### Estado e Gerenciamento
-- Implemente o gerenciamento de estado usando o Context API ou Redux para armazenar e atualizar as notícias exibidas na aplicação
+## Tecnologias Utilizadas
 
-### Design Patterns
-- Utilize pelo menos um design pattern (por exemplo, Factory, Observer, MVC) para estruturar e organizar o código do back-end
+- NestJS: Framework para construção de APIs escaláveis e eficientes.
+- TypeScript: Linguagem principal do projeto.
+- Prisma ORM: ORM para gerenciamento do banco de dados.
+- PostgreSQL: Banco de dados relacional.
+- Docker: Ferramenta para facilitar a configuração do ambiente.
+- Swagger: Documentação da API.
+- Jest: Framework para testes unitários e integrados.
 
-### Testes
-- Escreva testes unitários para pelo menos uma função crítica do back-end ou do front-end
+## Como Rodar o Projeto
 
-### Dockerização
-- Crie um Dockerfile para cada serviço (backend e frontend)
-- Configure um arquivo docker-compose para orquestrar a execução dos containers
+### Pré-requisitos
 
-Os requisitos opcionais não são obrigatórios, porém podem ser considerados como critério de desempate em caso empate de pontuação entre os candidatos.
+- **Docker** e **Docker Compose** instalados.
+- **Node.js** (opcional, caso queira rodar localmente sem Docker).
 
-## Forma de envio do teste
-- Para informações adicionais, criar um doc contendo os motivos das tecnologias aplicadas, qual arquitetura foi implementada e demais informações
-- O código deverá ser entregue via Github, e a documentação de instrução como deixar do ambiente rodando, deverá ser incluída no README.md do projeto
-- Enviar por e-mail o link do repositório e o documento com todas as informações pertinentes
+### Passo a Passo
+
+1. **Clone o repositório**
+
+   Clone este repositório em sua máquina local:
+
+   ```bash
+   git clone <URL_do_repositório>
+   cd <diretório_do_repositório>
+   ```
+
+2. **Configuração das variáveis de ambiente**
+
+   Crie um arquivo .env a partir do .env.example na raiz do projeto:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Subir os containers com Docker Compose**
+   Execute o comando abaixo para construir as imagens e iniciar os containers:
+
+   ```bash
+   docker-compose up --build -d
+   ```
+
+Isso irá:
+
+- Criar o banco de dados PostgreSQL.
+
+- Aplicar as migrações do Prisma.
+
+- Executar o seed do banco de dados.
+
+- Iniciar a aplicação NestJS.
+
+## Acessando a API
+
+Após o Docker Compose iniciar os serviços, você pode acessar a documentação da API no Swagger:
+
+- **Swagger UI: http://localhost:3000/api**
+
+Aqui você pode explorar e testar todas as rotas disponíveis.
+
+## Testes
+
+O projeto inclui testes unitários e de integração para garantir a qualidade do código. Para rodar os testes, execute:
+
+```bash
+yarn test
+```
