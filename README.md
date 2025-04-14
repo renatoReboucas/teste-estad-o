@@ -15,9 +15,8 @@ O projeto foi construído utilizando NestJS (Node.js com TypeScript), PostgreSQL
 
 ### 2. Filtrar Notícias por Editoria
 
-- **GET /news/editoria/:editoria**
-- **Função**: Retorna notícias filtradas por categoria/editoria
-- **Parâmetros**: `editoria` na URL, `limit` e `page` na query
+- **GET /news/editoria/:urlPart**
+- **Função**: Retorna notícias filtradas por editoria/urlPart
 - **Resposta**: Lista de notícias da editoria especificada
 
 ### 3. Criar Notícia
@@ -29,11 +28,18 @@ O projeto foi construído utilizando NestJS (Node.js com TypeScript), PostgreSQL
 
 ### 4. Atualizar Notícia
 
-- **PUT /news/:id**
+- **PATCH /news/:id**
 - **Função**: Atualiza os dados de uma notícia existente
 - **Parâmetros**: `id` na URL
 - **Corpo da Requisição**: Objeto JSON com os campos a serem atualizados
 - **Resposta**: Objeto da notícia atualizada
+
+### 5. Deletar Notícia
+
+- **DELETE /news/:id**
+- **Função**: Deleta os dados de uma notícia existente
+- **Parâmetros**: `id` na URL
+- **Resposta**: Notícia deletada com sucesso!
 
 ## Tecnologias Utilizadas
 
