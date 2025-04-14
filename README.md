@@ -98,13 +98,13 @@ Isso irá:
 
 Após o Docker Compose iniciar os serviços, você pode acessar a documentação da API no Swagger:
 
-- **Swagger UI: http://localhost:3000/api**
+- **Swagger UI: http://localhost:3366/docs**
 
 Aqui você pode explorar e testar todas as rotas disponíveis.
 
 ## Testes
 
-O projeto inclui testes unitários e de integração para garantir a qualidade do código. Para rodar os testes, execute:
+O projeto inclui de integração para garantir a qualidade do código. Para rodar os testes, execute:
 
 ```bash
 yarn test
