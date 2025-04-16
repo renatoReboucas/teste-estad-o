@@ -45,9 +45,14 @@ export class NewsController {
   }
 
   @Get(':editoria/:urlPart')
-  @ApiOperation({ summary: 'Listar uma notícia específica.' })
+  @ApiOperation({ summary: 'Lista uma notícia específica pela url.' })
   async findExpecificNews(@Param('editoria') editoria: string, @Param('urlPart') urlPart: string) {
     return await this.newsService.listSpecificNews(editoria, urlPart);
+  }
+  @Get(':id')
+  @ApiOperation({ summary: 'Lista uma notícia específica pelo id.' })
+  async findNewsById(@Param('id') id: number) {
+    return await this.newsService.findById(id);
   }
 
   @Post()

@@ -59,6 +59,20 @@ export class NewsService {
       throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.BAD_REQUEST);
     }
   }
+  async findById(id: number): Promise<ResponseNewsDto> {
+    try {
+      const news = await this.prisma.news.findFirst({
+        where: {
+          id: id,
+        },
+      });
+      if (news) return news;
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    } catch (err) {
+      console.log(err);
+      throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.BAD_REQUEST);
+    }
+  }
   async createNews(
     data: CreateNewsDto,
     imagem?: Express.Multer.File,
