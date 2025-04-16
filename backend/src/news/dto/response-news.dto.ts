@@ -1,5 +1,5 @@
 export class ResponseNewsDto {
-    url: string;
+    url: string | null;
     editoria: string | null;
     id: number;
     titulo: string | null;

@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 async function main() {
   try {
     console.log('Executando seed...');
-
+    await prisma.news.deleteMany();
     const filePath = path.join(__dirname, '../assets/noticias.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
     const noticias = JSON.parse(jsonData);
@@ -23,10 +23,10 @@ async function main() {
           imagem_thumb: noticia.imagem_thumb,
           conteudo: noticia.conteudo,
           data_hora_publicacao: new Date(noticia.data_hora_publicacao),
-          }
-        })
-      }
-    
+        },
+      });
+    }
+
     console.log('Seed realizado com sucesso!');
   } catch (error) {
     console.error('Erro no seed:', error);

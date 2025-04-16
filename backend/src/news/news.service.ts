@@ -54,7 +54,7 @@ export class NewsService {
           url: `${editoria}/${urlPart}`,
         },
       });
-      if (news) return { ...news, url: `${BASEURL}/${news.url}` };
+      if (news) return news;
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     } catch (err) {
       console.log(err);
@@ -67,10 +67,7 @@ export class NewsService {
     imagemThumb?: Express.Multer.File,
   ): Promise<ResponseNewsDto> {
     try {
-      const formatEditoria = await removeAccents(data.editoria ?? '');
-      const formatUrl = await removeAccents(data.url ?? '');
-
-      const insert = await this.prisma.news.create({
+      return await this.prisma.news.create({
         data: {
           editoria: data.editoria ?? '',
           titulo: data.titulo ?? '',
@@ -80,14 +77,10 @@ export class NewsService {
             : new Date(),
           imagem: getImageUrl(imagem) ?? '',
           imagem_thumb: getImageUrl(imagemThumb) ?? '',
-          url: `${formatEditoria}/${formatUrl}`,
+          url: await formatNewsUrl(data.editoria ?? '', data.url ?? ''),
           conteudo: data.conteudo ?? '',
         },
       });
-      return {
-        ...insert,
-        url: await formatNewsUrl(data.editoria ?? '', data.url ?? ''),
-      };
     } catch (err) {
       console.log(err);
       throw new HttpException('Erro ao criar essa notícia!', HttpStatus.BAD_REQUEST);
@@ -110,9 +103,7 @@ export class NewsService {
         throw new HttpException('Essa notícia não existe!', HttpStatus.NOT_FOUND);
       }
 
-      const formatEditoria = await removeAccents(data.editoria ?? '');
-      const formatUrl = await removeAccents(data.url ?? '');
-      const update = await this.prisma.news.update({
+      return await this.prisma.news.update({
         where: {
           id: id,
         },
@@ -120,16 +111,12 @@ export class NewsService {
           ...data,
           imagem: getImageUrl(imagem) ?? findNews.imagem,
           imagem_thumb: getImageUrl(imagemThumb) ?? findNews.imagem_thumb,
-          url: `${formatEditoria}/${formatUrl}`,
+          url: await formatNewsUrl(data.editoria ?? '', data.url ?? ''),
           data_hora_publicacao: data.data_hora_publicacao
             ? new Date(data.data_hora_publicacao)
             : new Date(),
         },
       });
-      return {
-        ...update,
-        url: await formatNewsUrl(data.editoria ?? '', data.url ?? ''),
-      };
     } catch (err) {
       console.log(err);
       throw new HttpException('Erro ao atualizar essa notícia!', HttpStatus.BAD_REQUEST);
