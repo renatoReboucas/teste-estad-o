@@ -11,8 +11,6 @@ import type {
   StringResponseType,
 } from './dto/response-news.dto';
 
-const BASEURL = `${process?.env?.URL}:${process?.env?.PORT_FRONT}`;
-
 @Injectable()
 export class NewsService {
   constructor(private readonly prisma: PrismaService) { }
