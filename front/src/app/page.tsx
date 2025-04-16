@@ -2,14 +2,12 @@
 import Button from "@/Components/Button";
 import CardNews from "@/Components/CardNews";
 import Loading from "@/Components/Loading";
-// import Wysiwyg from "@/Components/Wysiwyg";
 import { newsApi } from "@/server/api-server";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
-  // const [value, setValue] = useState<string | undefined>("");
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 

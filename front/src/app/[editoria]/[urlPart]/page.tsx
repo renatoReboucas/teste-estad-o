@@ -9,7 +9,7 @@ export default async function NewsPage({
 
   return (
     <div className="min-h-screen p-5">
-      <ClientNewsContent editoria={params.editoria} urlPart={params.urlPart} />
+      <ClientNewsContent editoria={params?.editoria} urlPart={params?.urlPart} />
     </div>
   );
 }

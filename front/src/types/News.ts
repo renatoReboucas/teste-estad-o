@@ -6,7 +6,7 @@ export interface NewsType {
 }
 
 export interface News {
-  id: number
+  id?: number
   editoria: string
   url: string
   titulo: string
@@ -14,6 +14,19 @@ export interface News {
   data_hora_publicacao: string
   imagem: string
   imagem_thumb: string
+  conteudo: string
+  updatedAt: string
+}
+
+export interface NewsForm {
+  id?: number
+  editoria: string
+  url: string
+  titulo: string
+  subtitulo: string
+  data_hora_publicacao: string
+  imagem: File
+  imagem_thumb: File
   conteudo: string
   updatedAt: string
 }

@@ -2,14 +2,14 @@ import {ButtonHTMLAttributes} from 'react'
 import Loading from './Loading';
 import clsx from 'clsx';
 
-type Variants = 'destroy' | 'disabled'
+type Variants = 'primary' | 'destroy' | 'disabled' | 'edit'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variants
   isLoading?: boolean
 }
 export default function Button({
-  variant,
+  variant = 'primary',
   children,
   isLoading,
   className,
@@ -18,10 +18,12 @@ export default function Button({
   return (
     <button 
     className={clsx(
-      'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800',
+      'bg-blue-500 text-white rounded hover:bg-blue-600 p-1 cursor-pointer',
       {
-        "focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900": variant === 'destroy',
-        "text-gray-400 bg-gray-200 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:text-gray-400": variant === 'disabled',
+        'px-4 py-2': variant === 'primary',
+        "bg-red-500  hover:bg-red-600 ": variant === 'destroy',
+        "bg-yellow-500  hover:bg-yellow-600": variant === 'edit',
+        "bg-gray-500 hover:bg-gray-600 cursor-not-allowed": variant === 'disabled',
       },
       className
     )}

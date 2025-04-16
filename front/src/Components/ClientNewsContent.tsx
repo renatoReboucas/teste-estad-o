@@ -4,14 +4,9 @@ import { newsApi } from "@/server/api-server";
 import Loading from "./Loading";
 import Image from "next/image";
 import { Calendar } from "lucide-react";
+import type { PageParams } from "@/types/NewsPage";
 
-function ClientNewsContent({
-  editoria,
-  urlPart,
-}: {
-  editoria: string;
-  urlPart: string;
-}) {
+export default function ClientNewsContent({editoria,urlPart}: PageParams) {
   const { data, isLoading } = useQuery({
     queryKey: ["news-specific", editoria, urlPart],
     queryFn: () => newsApi.getSpecificNews(editoria, urlPart),
@@ -84,4 +79,3 @@ function ClientNewsContent({
   );
 }
 
-export default ClientNewsContent;
