@@ -11,10 +11,8 @@ export class ResponseNewsDto {
     updatedAt: Date | null;
 }
 
-export type FormattedNewsArray = ResponseNewsDto[];
-
 export class PaginatedNewsResponseDto {
-    news: FormattedNewsArray;
+    news: object[];
     total: number;
     totalPages: number;
     currentPage: number;
