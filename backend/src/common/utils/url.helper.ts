@@ -1,5 +1,4 @@
 export async function formatNewsUrl(editoria: string, urlPart: string): Promise<string> {
-  const baseUrl = `${process?.env?.URL}:${process?.env?.PORT_FRONT}`;
   const formattedEditoria = await removeAccents(editoria);
 
   const formattedUrl = await removeAccents(urlPart);
