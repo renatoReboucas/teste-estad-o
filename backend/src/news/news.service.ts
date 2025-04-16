@@ -106,7 +106,7 @@ export class NewsService {
     imagemThumb?: Express.Multer.File,
   ): Promise<ResponseNewsDto> {
     try {
-      const findNews = await this.prisma.news.findUnique({
+      const findNews = await this.prisma.news.findFirst({
         where: {
           id: id,
         },
@@ -136,7 +136,7 @@ export class NewsService {
   }
   async deleteNews(id: number): Promise<StringResponseType> {
     try {
-      const findNews = await this.prisma.news.findUnique({
+      const findNews = await this.prisma.news.findFirst({
         where: {
           id: id,
         },
