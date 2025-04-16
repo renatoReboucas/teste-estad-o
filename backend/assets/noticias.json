@@ -2,7 +2,7 @@
    {
       "id": 1,
       "editoria": "Economia",
-      "url": "china-nova-retaliacao-tarifas-estados-unidos",
+      "url": "economia/china-nova-retaliacao-tarifas-estados-unidos",
       "titulo": "China retalia os EUA, eleva tarifas para 125%, mas diz que disputa se tornará ‘piada’ histórica",
       "subtitulo": "China diz que guerra se tornou ‘um jogo de números, que não tem nenhum significado econômico prático’, e sinalizou que não fará novos aumentos, mesmo que os Estados Unidos voltem a subir as taxas",
       "data_hora_publicacao": "2025-04-11 16:44:00",
@@ -13,7 +13,7 @@
    {
       "id": 2,
       "editoria": "Saúde",
-      "url": "as-melhores-dicas-para-acabar-com-a-dificuldade-de-acordar-pela-manha-segundo-especialista-do-sono",
+      "url": "saude/as-melhores-dicas-para-acabar-com-a-dificuldade-de-acordar-pela-manha-segundo-especialista-do-sono",
       "titulo": "As melhores dicas para acabar com a dificuldade de acordar pela manhã, segundo especialista do sono",
       "subtitulo": "Identifique as causas básicas e minimize a inércia do sono; se nada mais funcionar, force o despertar",
       "data_hora_publicacao": "2025-04-11 15:22:00",
@@ -24,7 +24,7 @@
    {
       "id": 3,
       "editoria": "Política",
-      "url": "eliane-cantanhede/mercosul-racha-ao-meio-e-lula-amplia-para-america-latina-e-caribe-a-reacao-a-trump",
+      "url": "politica/eliane-cantanhede/mercosul-racha-ao-meio-e-lula-amplia-para-america-latina-e-caribe-a-reacao-a-trump",
       "titulo": "Mercosul racha ao meio e Lula amplia para América Latina e Caribe a reação a Trump",
       "subtitulo": "Declaração final foi apoiada por 30 dos 33 países, sob a liderança, entre outros, do Brasil; ficaram fora Argentina e Paraguai, além da sangrenta Nicarágua",
       "data_hora_publicacao": "2025-04-11 12:10:00",
@@ -35,7 +35,7 @@
    {
       "id": 4,
       "editoria": "Estadão Analisa",
-      "url": "estadao-analisa/estadao-analisa-com-carlos-andreazza-a-anistia-esta-para-negocio",
+      "url": "podcasts/estadao-analisa/estadao-analisa-com-carlos-andreazza-a-anistia-esta-para-negocio",
       "titulo": "Estadão Analisa com Carlos Andreazza: “A anistia está para negócio”",
       "subtitulo": "O programa diário traz uma curadoria dos temas mais relevantes do noticiário, deixando de lado o que é espuma, para se aprofundar no que é relevante",
       "data_hora_publicacao": "2025-04-11 11:57:00",
@@ -46,7 +46,7 @@
    {
       "id": 5,
       "editoria": "Economia",
-      "url": "negocios/estadao-empresas-mais-ganhadores-recebem-trofeus-em-evento-em-sao-paulo",
+      "url": "economia/negocios/estadao-empresas-mais-ganhadores-recebem-trofeus-em-evento-em-sao-paulo",
       "titulo": "Estadão Empresas Mais: Ganhadores recebem troféus em evento em São Paulo",
       "subtitulo": "Representantes de 57 companhias participam de celebração do maior e mais completo ranking empresarial do País",
       "data_hora_publicacao": "2025-04-11 09:57:00",
