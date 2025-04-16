@@ -41,7 +41,7 @@ export class NewsService {
       if (err instanceof HttpException) {
         throw err;
       }
-      throw new HttpException('Erro ao buscar todas as notícias!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Erro ao buscar todas as notícias!', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -56,7 +56,7 @@ export class NewsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     } catch (err) {
       console.log(err);
-      throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.NOT_FOUND);
     }
   }
   async findById(id: number): Promise<ResponseNewsDto> {
@@ -70,7 +70,7 @@ export class NewsService {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     } catch (err) {
       console.log(err);
-      throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Erro ao buscar essa notícia!', HttpStatus.NOT_FOUND);
     }
   }
   async createNews(
