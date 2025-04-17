@@ -43,6 +43,7 @@ services:
   frontend:
     build:
       context: ./front
+      dockerfile: Dockerfile
     container_name: frontend
     depends_on:
       - backend
@@ -51,9 +52,14 @@ services:
     env_file:
       - ./front/.env
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:3366
+      - NEXT_PUBLIC_API_URL=http://localhost:3366
+    restart: always
     networks:
       - news-network
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+      - /app/.next
 
 volumes:
   postgres_data:

@@ -7,12 +7,16 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 
+# Copiar código E o .env.production
 COPY . .
 
+#  Garante que o .env (ou .env.production) exista antes do build
 COPY .env.production .env
 
-RUN yarn build
+# Faz o build com as variáveis de ambiente embutidas
+# RUN yarn build
 
+# Etapa 2: imagem final
 FROM node:20-alpine
 
 WORKDIR /app
@@ -22,4 +26,4 @@ RUN yarn install --production
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]

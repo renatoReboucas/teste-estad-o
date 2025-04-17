@@ -1,16 +1,15 @@
-
-import type { PageParams } from "@/types/NewsPage";
+"use client";
 import ClientNewsContent from "@/Components/ClientNewsContent";
+import { useParams } from "next/navigation";
 
-export default async function NewsPage({
-  params,
-}: {
-  params: PageParams
-}) {
+export default function NewsPage() {
+  const params = useParams();
+  const editoria = params.editoria as string;
+  const urlPart = params.urlPart as string;
 
   return (
     <div className="min-h-screen p-5">
-      <ClientNewsContent editoria={params?.editoria} urlPart={params?.urlPart} />
+      <ClientNewsContent editoria={editoria} urlPart={urlPart} />
     </div>
   );
 }
