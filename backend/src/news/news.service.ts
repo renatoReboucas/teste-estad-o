@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import type { CreateNewsDto } from './dto/create-news.dto';
 import type { UpdateNewsDto } from './dto/update.news.dto';
 import type { PaginationDto } from '../common/dto/pagination.dto';
-import { formatNewsUrl, removeAccents } from '../common/utils/url.helper';
+import { formatNewsUrl } from '../common/utils/url.helper';
 import { getImageUrl } from '../common/utils/image.helper';
 import type {
   PaginatedNewsResponseDto,
