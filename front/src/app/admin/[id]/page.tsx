@@ -1,6 +1,6 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { newsApi } from "@/server/api-server";
 import NewsForm from "@/Components/NewsForm";
 import Loading from "@/Components/Loading";
@@ -10,9 +10,11 @@ export default function NewsPage() {
   const router = useRouter();
   const id = params.id as string;
   const isNew = id === "new";
+  const queryClient = useQueryClient()
+
 
   const { data, isLoading } = useQuery({
-    queryKey: ["news-edit", id],
+    queryKey: ["news-edit"],
     queryFn: async () => {
       if (isNew) return null;
       try {
@@ -23,10 +25,11 @@ export default function NewsPage() {
       }
     },
     enabled: !isNew,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   const handleSuccess = () => {
+    queryClient.resetQueries()
     router.push("/admin");
   };
 
@@ -42,7 +45,7 @@ export default function NewsPage() {
             <Loading />
           </div>
         ) : (
-          <NewsForm initialData={data} onSuccess={handleSuccess} />
+          <NewsForm initialData={data || undefined} onSuccess={handleSuccess} />
         )}
       </div>
     </div>

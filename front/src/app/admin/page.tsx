@@ -1,7 +1,7 @@
 "use client";
 import Table from "@/Components/Table";
 import { newsApi } from "@/server/api-server";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Link from "next/link";
 import { Edit, Trash2, Link as Li } from "lucide-react";
@@ -13,14 +13,17 @@ export default function Admin() {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const router = useRouter();
+  const queryClient = useQueryClient()
 
-  const { data, isLoading,refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["admin-news", page, limit],
     queryFn: () => newsApi.getNews(page, limit),
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+  
   });
 
   const { mutateAsync } = useMutation({
+    mutationKey: ["delete-news"],
     mutationFn: (id: number) => newsApi.deleteNews(id),
     onSuccess: () => {
       refetch()
@@ -35,6 +38,7 @@ export default function Admin() {
   };
 
   const handleEdit = (id: number) => {
+    queryClient.invalidateQueries({ queryKey: ['news-edit'] })
     router.push(`/admin/${id}`);
   };
 
@@ -45,6 +49,7 @@ export default function Admin() {
   const renderRow = (item: News) => (
     <tr key={item.id} className="border-b">
       <td className="p-4 text-gray-800">{item.titulo}</td>
+      <td className="p-4 text-gray-800">{new Date(item.updatedAt ?? '').toLocaleDateString('pt-BR')}</td>
       <td className="p-4 w-24 text-center">
         <Link
           href={item.url}
@@ -59,14 +64,14 @@ export default function Admin() {
         <div className="flex justify-center gap-4">
           <Button
             variant="edit"
-            onClick={() => handleEdit(item.id)}
+            onClick={() => handleEdit(Number(item.id))}
             className="p-2"
           >
             <Edit />
           </Button>
           <Button
             variant="destroy"
-            onClick={() => handleDelete(item.id)}
+            onClick={() => handleDelete(Number(item.id))}
             className="p-2"
           >
             <Trash2 />

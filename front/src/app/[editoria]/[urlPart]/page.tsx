@@ -1,3 +1,4 @@
+
 import type { PageParams } from "@/types/NewsPage";
 import ClientNewsContent from "@/Components/ClientNewsContent";
 

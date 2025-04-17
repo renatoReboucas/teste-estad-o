@@ -11,11 +11,11 @@ export interface News {
   url: string
   titulo: string
   subtitulo: string
-  data_hora_publicacao: string
+  data_hora_publicacao?: string
   imagem: string
   imagem_thumb: string
   conteudo: string
-  updatedAt: string
+  updatedAt?: string
 }
 
 export interface NewsForm {
@@ -24,9 +24,17 @@ export interface NewsForm {
   url: string
   titulo: string
   subtitulo: string
-  data_hora_publicacao: string
+  data_hora_publicacao?: string
   imagem: File
   imagem_thumb: File
   conteudo: string
-  updatedAt: string
+}
+
+export type TypedFormData<T> = FormData & {
+  get(key: keyof T): FormDataEntryValue | null;
+  getAll(key: keyof T): FormDataEntryValue[];
+  has(key: keyof T): boolean;
+  set(key: keyof T, value: string | Blob, filename?: string): void;
+  append(key: keyof T, value: string | Blob, filename?: string): void;
+  delete(key: keyof T): void;
 }

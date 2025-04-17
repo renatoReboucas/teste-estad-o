@@ -40,6 +40,21 @@ services:
     volumes:
       - ./backend/logs:/app/logs
 
+  frontend:
+    build:
+      context: ./front
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./front/.env
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:3366
+    networks:
+      - news-network
+
 volumes:
   postgres_data:
     name: postgres_data_new

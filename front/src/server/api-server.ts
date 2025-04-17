@@ -1,4 +1,4 @@
-import type { News, NewsForm, NewsType } from "@/types/News";
+import type { News, NewsForm, NewsType, TypedFormData } from "@/types/News";
 import { api } from "./api";
 
 async function getNews(page: number = 1, limit: number = 10) {
@@ -28,9 +28,7 @@ async function getNewsById(id: number) {
   }
 }
 
-async function createNews(submitFormData: NewsForm) {
-  console.log('asdasda', submitFormData);
-
+async function createNews(submitFormData: TypedFormData<NewsForm>) {
   const response = await api.post('/news', submitFormData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -41,7 +39,7 @@ async function createNews(submitFormData: NewsForm) {
   }
 }
 
-async function updateNews(id: number, submitFormData: NewsForm) {
+async function updateNews(id: number, submitFormData: TypedFormData<NewsForm>) {
   const response = await api.patch(`/news/${id}`, submitFormData, {
     headers: {
       'Content-Type': 'multipart/form-data'
