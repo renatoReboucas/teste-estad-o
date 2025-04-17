@@ -51,7 +51,7 @@ services:
     env_file:
       - ./front/.env
     environment:
-      - NEXT_PUBLIC_API_BASE_URL=http://backend:3366
+      - NEXT_PUBLIC_API_URL=http://backend:3366
     networks:
       - news-network
 
